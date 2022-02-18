@@ -98,7 +98,7 @@ pub fn build(b: *std.build.Builder) void {
     const test_step = b.step("test", "Run library tests");
     test_step.dependOn(&unit_tests.step);
     test_step.dependOn(&mock_tests.step);
-    // test_step.dependOn(&real_tests.step);
+    test_step.dependOn(&real_tests.step);
     if (coverage) {
         const merge_step = b.addSystemCommand(&[_][]const u8{
             "kcov",
