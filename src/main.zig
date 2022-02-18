@@ -26,7 +26,6 @@ const ChunkedDecoder = @import("chunk_decoder.zig").ChunkedDecoder;
 const BytesView = @import("BytesView.zig");
 
 const dns = @import("dns.zig");
-const tls = @import("tls.zig");
 const fmtx = @import("fmtx.zig");
 const memx = @import("memx.zig");
 const netx = @import("netx.zig");
