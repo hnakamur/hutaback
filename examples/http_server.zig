@@ -537,7 +537,7 @@ pub fn main() anyerror!void {
     const port = getEnvUint(u16, "PORT", port_default, port_max);
     const address = try std.net.Address.parseIp4("127.0.0.1", port);
     global_server = try Server.init(allocator, address);
-    os.sigaction(os.SIG.INT, &.{
+    try os.sigaction(os.SIG.INT, &.{
         .handler = .{ .handler = sigchld },
         .mask = os.system.empty_sigset,
         .flags = os.system.SA.NOCLDSTOP,

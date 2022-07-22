@@ -56,7 +56,7 @@ pub fn main() !void {
     );
     defer proxy.deinit();
 
-    os.sigaction(os.SIG.INT, &.{
+    try os.sigaction(os.SIG.INT, &.{
         .handler = .{ .handler = sigchld },
         .mask = os.system.empty_sigset,
         .flags = os.system.SA.NOCLDSTOP,
