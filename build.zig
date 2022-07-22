@@ -111,7 +111,7 @@ pub fn build(b: *std.build.Builder) void {
         test_step.dependOn(&merge_step.step);
     }
 
-    const example_step = b.step("examples", "Build examples");
+    const examples_step = b.step("examples", "Build examples");
     inline for (.{
         "async_http_client",
         "async_http_server",
@@ -119,13 +119,14 @@ pub fn build(b: *std.build.Builder) void {
         "http_proxy",
         "http_server",
     }) |example_name| {
-        const example = b.addExecutable(example_name, "examples/" ++ example_name ++ ".zig");
-        example.addPackage(pkgs.hutaback);
-        example.addPackage(pkgs.@"tigerbeetle-io");
-        example.addPackage(pkgs.datetime);
-        example.setBuildMode(mode);
-        example.setTarget(target);
-        example.install();
-        example_step.dependOn(&example.step);
+        const example_exe = b.addExecutable(example_name, "examples/" ++ example_name ++ ".zig");
+        example_exe.addPackage(pkgs.hutaback);
+        example_exe.addPackage(pkgs.@"tigerbeetle-io");
+        example_exe.addPackage(pkgs.datetime);
+        example_exe.setBuildMode(mode);
+        example_exe.setTarget(target);
+        example_exe.install();
+        const install_exe = b.addInstallArtifact(example_exe);
+        examples_step.dependOn(&install_exe.step);
     }
 }
